@@ -2,20 +2,20 @@ from __future__ import annotations
 
 # conference planning problem
 # solves the problems of allocating presentations to timeslots and rooms (of different capacity) taking account to
-# 1) capacity (most popular are allocated first)
+# 1) popularity (most popular are allocated first)
 # 2) vote preferences (presentations voted for by the same people should preferably be allocated to different time slots)
 #
 #
 # GIVEN:
-# T time slots where T[str] slot descriptions
+# T[] time slots with slot descriptions
 # rooms with sizes R[i], sorted by capacity in decreasing order
-# presentations: L[T * len(R)]
+# presentations: L[T * len(R)] with presentation description
 # votes with matrix of preferences: where V[i] is a vote of i person where vote is a list of size of presentations
 # with free distribution of votes equal to number of lectures (can be 1 vote to every lecture, or all votes to one etc)
 #
-# for example T == 3
-# R[0] == 200, R[1] == 100, R[2] == 50
-# T[0] == ["Lecture1"], ...
+# for example T[0] == "9am", ...
+# R[0] == 200, R[1] == 100, R[2] == 50 room capacity
+# L[0] == ["Lecture1"], ...
 # votes: V[1]==[0,2,0,0,0,5,2,0,0], ...
 #
 # TASK:
@@ -23,7 +23,7 @@ from __future__ import annotations
 #
 # IMPLEMENTATION DETAILS:
 # Use partly greedy approach because the problem seems to be NP-hard ("travelling politician problem")
-# Bruteforce complexity is O(len(D)!)
+# Bruteforce complexity is O(len(T)!)
 #
 # OUTPUT:
 # List O[room][timeslot] with index in L
