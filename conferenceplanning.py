@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 # conference planning problem
-# solves the problems of allocating presentations to timeslots and rooms (of different capacity) taking account to
+# solves the problem of allocating presentations to timeslots and rooms (of different capacity) taking account to
 # 1) popularity (most popular are allocated first)
 # 2) vote preferences (presentations voted for by the same people should preferably be allocated to different time slots)
 #
@@ -10,7 +10,7 @@ from __future__ import annotations
 # T[] time slots with slot descriptions
 # rooms with sizes R[i], sorted by capacity in decreasing order
 # presentations: L[T * len(R)] with presentation description
-# votes with matrix of preferences: where V[i] is a vote of i person where vote is a list of size of presentations
+# votes with matrix of preferences: where V[i] is a vote of i person where vote is a List[len(L)]
 # with free distribution of votes equal to number of lectures (can be 1 vote to every lecture, or all votes to one etc)
 #
 # for example T[0] == "9am", ...
@@ -23,10 +23,10 @@ from __future__ import annotations
 #
 # IMPLEMENTATION DETAILS:
 # Use partly greedy approach because the problem seems to be NP-hard ("travelling politician problem")
-# Bruteforce complexity is O(len(T)!)
+# Bruteforce complexity is O(len(T)! * len(R))
 #
 # OUTPUT:
-# List O[room][timeslot] with index in L
+# List[room][timeslot] with index in L
 #
 ###### Inspired by negative experiences of visiting some conferences
 
@@ -167,3 +167,35 @@ V.extend([1, 1, 1, 1, 1, 1, 1, 1, 1] for _ in range(2))  # sponsor representativ
 plan(T, R, L, V, greedy=True)
 print()
 plan(T, R, L, V)
+
+# run:
+#
+# presentations' total popularity [82, 66, 77, 47, 17, 132, 62, 37, 2]
+# using GREEDY algorithm
+# morning
+# 30 python1
+# 20 golang2
+# 10 sponsor presentation
+# noon
+# 30 java1
+# 20 python2
+# 10 golang3
+# evening
+# 30 golang1
+# 20 java2
+# 10 haskell
+#
+# presentations' total popularity [82, 66, 77, 47, 17, 132, 62, 37, 2]
+# using BRUTEFORCE algorithm
+# morning
+# 30 python1
+# 20 golang2
+# 10 sponsor presentation
+# noon
+# 30 java1
+# 20 python2
+# 10 golang3
+# evening
+# 30 golang1
+# 20 java2
+# 10 haskell
