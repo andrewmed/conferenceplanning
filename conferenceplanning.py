@@ -67,7 +67,7 @@ def _bruteforce2(D: List[List[int]], M: List[int], p: int, visited: Set[int], ro
         m += D[row][i]
         if m <= min:
             min = m
-            subpath = [(M[p + i])] + subpath
+            subpath = [M[p + i]] + subpath
             path = subpath
 
     return path, min
@@ -95,7 +95,7 @@ def plan(T: List[str], R: List[int], L: List[str], V: List[List[int]], **kwargs)
         raise Exception("number of presentations should equal T * R")
 
     # find P popularity (rating) of each presentation
-    P = [0 for _ in range(len(L))]
+    P = [0] * len(L)
     for v in V:
         sum = 0
         for i in range(len(L)):
@@ -105,17 +105,8 @@ def plan(T: List[str], R: List[int], L: List[str], V: List[List[int]], **kwargs)
             raise Exception("incorrect vote")
 
     print("presentations' total popularity", P)
-
-    # sort presentations by their popularity
-    M = [i for i in range(len(L))]
-
-    # number of presentations should not be big, insertion sort is just fine
-    for i in range(len(M)):
-        p = i
-        while p > 0 and P[M[p]] < P[M[p - 1]]:
-            M[p], M[p - 1] = M[p - 1], M[p]
-            p -= 1
-    M.reverse()
+    M = [i for i in range(len(P))]
+    M = sorted(M, key=lambda x: P[x], reverse=True)
 
     E = []
 
